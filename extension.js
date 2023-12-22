@@ -23,7 +23,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
       }
       const qhlyLib = ['qhly_skinShare', 'qhly_skinEdit', 'qhly_skinChange', 'qhly_changeSkillSkin'];
       for (let l of qhlyLib) if (!lib[l]) lib[l] = {};
-      qhly_DynamicPlayer = (function () {
+      var qhly_DynamicPlayer = (function () {
         function DynamicPlayer(pathPrefix) {
           this.id = duilib.BUILT_ID++;
           this.dpr = 1;
@@ -2320,8 +2320,8 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
         if (player) {
           if (player._qhly_skinStatus) return player._qhly_skinStatus[avatar2 ? 1 : 0];
           if (player._qhlyIsChanged && player._qhlyIsChanged[avatar2 ? 1 : 0]) return 2;
-          if (get.itemtype(player) == 'player') node = player.node['avatar' + (avatar2 ? '2' : '')];
-          else node = player;
+          if (get.itemtype(player) == 'player') var node = player.node['avatar' + (avatar2 ? '2' : '')];
+          else var node = player;
           const support = ['.jpg', '.png', '.webp'];
           const bg = node.style.backgroundImage || node.style.getPropertyValue('background-image');
           if (lib.qhly_skinChange[name] && lib.qhly_skinChange[name][game.qhly_earse_ext(game.qhly_getSkin(name))]) {
@@ -2442,7 +2442,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
         } else return false;
       }
       game.qhly_checkYH = function (player, group) {
-        if(lib.config.qhly_circle_top === true)return;
+        if(lib.config.qhly_close_circle_top === true)return;
         if (lib.config['extension_十周年UI_newDecadeStyle'] == "on") return;
         if (!player || get.itemtype(player) != 'player') return;
         let gro = player.group || group;
@@ -8279,10 +8279,10 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
           content1.id = 'content1';
           var content2 = ui.create.div('.qh-skinchange-shousha-area2', cover);
           content2.id = 'content2';
-          rArrow1 = ui.create.div('.qh-skinchange-shousha-arrow', dialog);
-          lArrow1 = ui.create.div('.qh-skinchange-shousha-arrow.left', dialog);
-          rArrow2 = ui.create.div('.qh-skinchange-shousha-arrow', dialog);
-          lArrow2 = ui.create.div('.qh-skinchange-shousha-arrow.left', dialog);
+          var rArrow1 = ui.create.div('.qh-skinchange-shousha-arrow', dialog);
+          var lArrow1 = ui.create.div('.qh-skinchange-shousha-arrow.left', dialog);
+          var rArrow2 = ui.create.div('.qh-skinchange-shousha-arrow', dialog);
+          var lArrow2 = ui.create.div('.qh-skinchange-shousha-arrow.left', dialog);
           var autoskin = ui.create.div('.qh-skinchange-shousha-autoskin', dialog);
           ui.create.div('.qh-skinchange-shousha-autoskinborder', autoskin);
           ui.create.div('.qh-skinchange-shousha-autoskinitem', autoskin);
@@ -9243,19 +9243,14 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
             if (game.qhly_getPlayerStatus(player) == 2 && lib.qhly_skinChange[realName][game.qhly_earse_ext(skin)].audio1) cardURL = pkgPath + (skin ? realName : player.name1) + '/' + lib.qhly_skinChange[realName][game.qhly_earse_ext(skin)].audio1;
             exchangeCA = true;
           }
-          if (typeof audioinfo == 'string' && audioinfo.indexOf('ext:') == 0) {
-            game.playAudio('..', 'extension', audioinfo.slice(4), card.name + '_' + sex);
-          }
-          else {
-            if (exchangeCA) {
-              cardURL += card.name;
-              if (game.thunderFileExist(lib.assetURL + cardURL + '.mp3')) game.playAudio('..', cardURL);
-              else{
-                return game.playAudio('card', sex, card.name);
-              }
-            } else{
-              return game.playAudio('card', sex, card.name);
+          if (exchangeCA) {
+            cardURL += card.name;
+            if (game.thunderFileExist(lib.assetURL + cardURL + '.mp3')) game.playAudio('..', cardURL);
+            else{
+              return oldPlayCardAudio(card,{sex:sex});//game.playAudio('card', sex, card.name);
             }
+          } else{
+            return oldPlayCardAudio(card,{sex:sex});
           }
         }
       };
@@ -9590,6 +9585,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
         }
         var realName = game.qhly_getRealName(name);//添加皮肤共享
         if (!pkg) pkg = game.qhly_foundPackage(pkg);
+        var taici;
         if (!skin) {
           var dinfo = lib.qhly_dirskininfo[realName];
           if (dinfo && dinfo.origin && dinfo.origin.skill) {
@@ -11766,6 +11762,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
               }
             }
           };
+          var chname;
           if (state.pkg.characterNameTranslate) {
             chname = state.pkg.characterNameTranslate(state.name);
           } else {
@@ -15681,13 +15678,13 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
 
         }
       },
-      "qhly_circle_top":{
+      "qhly_close_circle_top":{
         "name": "关闭圆顶",
         "intro": "设置此选项，角色框将不会显示顶部圆弧。",
-        "init": lib.config.qhly_circle_top === undefined ? false : lib.config.qhly_circle_top,
+        "init": lib.config.qhly_close_circle_top === undefined ? false : lib.config.qhly_close_circle_top,
         onclick: function (item) {
-          game.saveConfig('extension_千幻聆音_qhly_circle_top', item);
-          game.saveConfig('qhly_circle_top', item);
+          game.saveConfig('extension_千幻聆音_qhly_close_circle_top', item);
+          game.saveConfig('qhly_close_circle_top', item);
         }
       },
       "qhly_playerwindow": {
@@ -16078,7 +16075,7 @@ game.import("extension", function (lib, game, ui, get, ai, _status) {
       author: "玄武江湖工作室 & 雷",
       diskURL: "",
       forumURL: "",
-      version: "4.15.1",
+      version: "4.15.3",
     }, files: { "character": [], "card": [], "skill": [] }
   };
   return window.qhly_extension_package;
