@@ -273,7 +273,8 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
         }
     }
     class GridPanel extends Panel{
-        constructor(row,column){
+        constructor(clazz,row,column){
+            super(clazz);
             this.row = row;
             this.column = column;
         }

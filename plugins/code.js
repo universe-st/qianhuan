@@ -104,7 +104,9 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                 func();
             }else{
                 lib.init.css(lib.assetURL+'layout/default','codemirror');
-                lib.init.js(lib.assetURL+'game','codemirror',func);
+                import('../../../../game/codemirror.js').then(() => {
+                    func();
+                });
             }
         }
     });
