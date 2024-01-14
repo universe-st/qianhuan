@@ -1,6 +1,6 @@
 import { VERSION } from './version.js'
 import { lib,get,_status,ui,game,ai } from './noname.js';
-import { CONFIG } from './config.js';
+import { CONFIG } from '../config.js';
 import { CONTENT } from './content.js';
 import { PRECONTENT } from './precontent.js';
 
