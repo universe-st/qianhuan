@@ -3179,7 +3179,7 @@ export let CONTENT = function (config, pack) {
       }
       var HP = 0, MAXHP = 0, hpNode;//血量 空血量
       if (typeof hp == 'string') {
-        hp2 = hp.split('/');
+        var hp2 = hp.split('/');
         if (hp2.length > 1) {
           HP = hp2[0];
           MAXHP = hp2[1];
@@ -7316,10 +7316,10 @@ export let CONTENT = function (config, pack) {
         content1.id = 'content1';
         var content2 = ui.create.div('.qh-skinchange-decade-area2', cover);
         content2.id = 'content2';
-        rArrow1 = ui.create.div('.qh-skinchange-decade-arrow', dialog);
-        lArrow1 = ui.create.div('.qh-skinchange-decade-arrow.left', dialog);
-        rArrow2 = ui.create.div('.qh-skinchange-decade-arrow', dialog);
-        lArrow2 = ui.create.div('.qh-skinchange-decade-arrow.left', dialog);
+        var rArrow1 = ui.create.div('.qh-skinchange-decade-arrow', dialog);
+        var lArrow1 = ui.create.div('.qh-skinchange-decade-arrow.left', dialog);
+        var rArrow2 = ui.create.div('.qh-skinchange-decade-arrow', dialog);
+        var lArrow2 = ui.create.div('.qh-skinchange-decade-arrow.left', dialog);
         var autoskin = ui.create.div('.qh-skinchange-decade-autoskin', dialog);
         ui.create.div('.qh-skinchange-decade-autoskinborder', autoskin);
         ui.create.div('.qh-skinchange-decade-autoskinitem', autoskin);

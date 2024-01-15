@@ -1,4 +1,4 @@
-//name:"千幻聆音"
+//game.import( name:"千幻聆音"
 //提示：本扩展源代码基于GPL协议向无名杀社区开放，欢迎大家借鉴和参考代码。
 import { VERSION } from './version.js'
 import { lib,get,_status,ui,game,ai } from './extension/noname.js';
