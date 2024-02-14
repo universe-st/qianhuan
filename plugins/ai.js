@@ -124,7 +124,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                     if(!list){
                         list = [];
                     }
-                    ui.qhly_initCheckBox(check,list.contains(name));
+                    ui.qhly_initCheckBox(check,list.includes(name));
                     ui.qhly_bindCheckBoxAndSpanText(check,text);
                     check.qhly_onchecked=function(c){
                         if(c){

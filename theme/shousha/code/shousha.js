@@ -479,7 +479,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
               if (cPlayer && lib.config.qhly_skillingame) {
                 var skills = cPlayer.getSkills(false, false);
                 for (var tskill of skills) {
-                  if (viewSkill.contains(tskill)) continue;
+                  if (viewSkill.includes(tskill)) continue;
                   var info = get.info(tskill);
                   if (!info) continue;
                   if (!lib.translate[tskill]) continue;
@@ -686,7 +686,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                         }
                       }
                       ui.qhly_initCheckBox(check, list.filter(function (sk) {
-                        return !lib.config.autoskilllist || !lib.config.autoskilllist.contains(sk);
+                        return !lib.config.autoskilllist || !lib.config.autoskilllist.includes(sk);
                       }).length != 0);
                       bindFunc(check, document.getElementById('qhly_autoskill_text_' + skill));
                       check.qhly_onchecked = function (checked) {
@@ -944,7 +944,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                         if (this.skinList[i].single && lib.config['extension_千幻聆音_qhly_dom2image']) skinView.toImageBtn.setAttribute('single', true);//6
                       }
                     }
-                    if ((!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).contains(info.translation)) {
+                    if ((!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).includes(info.translation)) {
                       if (game.qhly_skinIs(name, skin)) {
                         currentSkinView = skinView;
                         game.qhly_changeDynamicSkin(state.mainView.avatarImage, info.translation, name);
@@ -959,7 +959,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                         }
                       }
                     }
-                    if (window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).contains(info.translation)) skinView.dynamicTrue.setAttribute('dynamic', true);
+                    if (window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).includes(info.translation)) skinView.dynamicTrue.setAttribute('dynamic', true);
                     else skinView.dynamicTrue.setAttribute('dynamic', false);
                   } else {
                     skinView.belowText.innerHTML = "经典形象";
@@ -977,7 +977,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                       else state.mainView.dynamicToggle.setAttribute('toggle', false);
                       if (this.skinList[0].skinId == null && this.skinList[0].bothSkin && lib.config.qhly_skinset && lib.config.qhly_skinset.djtoggle && (!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name]['经典形象'])) game.qhly_changeDynamicSkin(state.mainView.avatarImage, '经典形象', name);
                     }
-                    if (window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).contains('经典形象')) skinView.dynamicTrue.setAttribute('dynamic', true);
+                    if (window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).includes('经典形象')) skinView.dynamicTrue.setAttribute('dynamic', true);
                     else skinView.dynamicTrue.setAttribute('dynamic', false);
                   }
                   skinView.skinQua = ui.create.div('.qh-page-skinavatarlevel', skinView);
@@ -1132,7 +1132,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                           state.mainView.skinType.hide();
                           state.mainView.hp.hide();
                           state.mainView.hpWrap.show();
-                          if ((!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name][now.belowText.innerHTML]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).contains(now.belowText.innerHTML)) {
+                          if ((!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name][now.belowText.innerHTML]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).includes(now.belowText.innerHTML)) {
                             game.qhly_changeDynamicSkin(state.mainView.avatarImage, now.belowText.innerHTML, name);
                             if (state.mainView.avatarImage.dynamic && state.mainView.avatarImage.dynamic.primary && state.mainView.avatarImage.dynamic.primary.name) _status.currentTexiao = state.mainView.avatarImage.dynamic.primary.name;
                             if (_status.currentTexiao) {
@@ -1145,7 +1145,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                             }
                           }
                           else if (state.mainView.avatarImage.stopDynamic) state.mainView.avatarImage.stopDynamic();
-                          if (that.skinList[now.id.slice(12)].bothSkin && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).contains(now.belowText.innerHTML)) {
+                          if (that.skinList[now.id.slice(12)].bothSkin && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).includes(now.belowText.innerHTML)) {
                             state.mainView.dynamicToggle.setAttribute('toggle', true);
                             if (lib.config.qhly_skinset && lib.config.qhly_skinset.djtoggle && (!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name][now.belowText.innerHTML])) state.mainView.dynamicToggle.classList.remove('jing');
                             else state.mainView.dynamicToggle.classList.add('jing');
@@ -1538,7 +1538,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                 for (var i of this.skinList) {
                   if (i.skinId) {
                     var skin = i.skinId.substring(0, i.skinId.lastIndexOf('.'));
-                    if (dynamicSkinList.contains(skin)) i.bothSkin = true;
+                    if (dynamicSkinList.includes(skin)) i.bothSkin = true;
                   }
                 }
                 if (dynamicSkinList.length) {
@@ -1551,7 +1551,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                       this.skinList['0'].bothSkin = true;
                       subView.skinType.style.cssText += 'transform:translateY(32%);';
                     }
-                    else if (!duibiList.contains(i)) {
+                    else if (!duibiList.includes(i)) {
                       var dyskin = i + '.jpg';
                       var dyinfo = game.qhly_getSkinInfo(name, dyskin, state.pkg);
                       this.skinList.push({
@@ -1720,7 +1720,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                 var groupx = get.is.double(name, true);
                 group1 = groupx[0];
                 group2 = groupx[1];
-              } else if (groupList.contains(group)) {
+              } else if (groupList.includes(group)) {
                 group1 = group;
                 group2 = groupList[groupList.indexOf(group) + 1];
               } else {
@@ -1817,11 +1817,11 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                 }
               }
               var checkboxFav = document.getElementById('qhconfig_checkbox_fav');
-              ui.qhly_initCheckBox(checkboxFav, lib.config.favouriteCharacter && lib.config.favouriteCharacter.contains(name));
+              ui.qhly_initCheckBox(checkboxFav, lib.config.favouriteCharacter && lib.config.favouriteCharacter.includes(name));
               bindFunc(checkboxFav, document.getElementById('qhconfig_checkbox_text_fav'));
               checkboxFav.qhly_onchecked = function (check) {
                 if (!check) {
-                  if (lib.config.favouriteCharacter && lib.config.favouriteCharacter.contains(name)) {
+                  if (lib.config.favouriteCharacter && lib.config.favouriteCharacter.includes(name)) {
                     lib.config.favouriteCharacter.remove(name);
                   }
                 } else {
@@ -1835,12 +1835,12 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
               };
               var checkboxdG = document.getElementById('qhconfig_checkbox_doubleGroup');
               var dgselect = document.getElementById('qhly_dgselect');
-              if ((!lib.config.doubleGroupCharacter || lib.config.doubleGroupCharacter && !lib.config.doubleGroupCharacter.contains(name)) || get.is.double(name)) dgselect.classList.add('selectless');
-              ui.qhly_initCheckBox(checkboxdG, lib.config.doubleGroupCharacter && lib.config.doubleGroupCharacter.contains(name) || get.is.double(name), get.is.double(name));
+              if ((!lib.config.doubleGroupCharacter || lib.config.doubleGroupCharacter && !lib.config.doubleGroupCharacter.includes(name)) || get.is.double(name)) dgselect.classList.add('selectless');
+              ui.qhly_initCheckBox(checkboxdG, lib.config.doubleGroupCharacter && lib.config.doubleGroupCharacter.includes(name) || get.is.double(name), get.is.double(name));
               bindFunc(checkboxdG, document.getElementById('qhconfig_checkbox_text_doubleGroup'), get.is.double(name));
               checkboxdG.qhly_onchecked = function (check) {
                 if (!check) {
-                  if (lib.config.doubleGroupCharacter && lib.config.doubleGroupCharacter.contains(name) && !get.is.double(name)) {
+                  if (lib.config.doubleGroupCharacter && lib.config.doubleGroupCharacter.includes(name) && !get.is.double(name)) {
                     lib.config.doubleGroupCharacter.remove(name);
                     dgselect.classList.add('selectless');
                   }
@@ -1912,7 +1912,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
               var allForbid = true;
               for (var mode in lib.mode) {
                 if (mode != 'connect') {
-                  if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].contains(mode)) {
+                  if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].includes(mode)) {
                     continue;
                   }
                   allForbid = false;
@@ -1957,13 +1957,13 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                   var checkbox = document.getElementById('qhconfig_checkbox_banned_mode_' + mode);
                   this['banned_checkbox_mode_' + mode] = checkbox;
                   if (checkbox) {
-                    ui.qhly_initCheckBox(checkbox, lib.config[mode + '_banned'] && lib.config[mode + '_banned'].contains(name));
+                    ui.qhly_initCheckBox(checkbox, lib.config[mode + '_banned'] && lib.config[mode + '_banned'].includes(name));
                     bindFunc(checkbox, document.getElementById('qhconfig_checkbox_text_' + mode));
                     (function (mode) {
                       checkbox.qhly_onchecked = function (checked) {
                         if (!checked) {
                           that.banned_checkbox_mode_all.qhly_setChecked(false, true);
-                          if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].contains(name)) {
+                          if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].includes(name)) {
                             lib.config[mode + '_banned'].remove(name);
                           }
                         } else {

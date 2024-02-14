@@ -175,6 +175,31 @@ export let PRECONTENT = function (config) {
     
           }
         };
+
+        lib.qhly_viewskin['newyear'] = {
+          name: '水墨龙吟-新春',
+          whr: 2.2028,
+          isQiLayout: true,
+          buttonTextSpace: false,
+          lihuiSupport: true,
+          layoutType: 'qi',
+          skillPageSkillNameColor: '#FFFFFF',
+          skillPageDerivationSkillColor: '#00F5FF',
+          skinPageSkillNameColor: '#FFFFFF',
+          buttonImage: 'extension/千幻聆音/theme/newyear/newui_button_shuimo.png',
+          buttonPressedImage: 'extension/千幻聆音/theme/newyear/newui_button_selected_shuimo.png',
+          skillPagePlayAudioButtonImage: 'extension/千幻聆音/theme/shuimo/newui_playaudio_shuimo.png',
+          skinPagePlayAudioButtonImage: 'extension/千幻聆音/theme/shuimo/qhly_pic_playaudiobutton_shuimo.png',
+          onchange: function () {
+            game.saveConfig('qhly_viewskin_css', 'newui_newyear');
+          },
+          changeViewSkin: function (view) {
+    
+          },
+          skinPage: function (pageName, view) {
+    
+          }
+        };
     
         lib.qhly_viewskin['decade'] = {
           name: '十周年',
@@ -296,7 +321,7 @@ export let PRECONTENT = function (config) {
           Object.keys(lib.qhly_skinChange).forEach(character => {
             Object.keys(lib.qhly_skinChange[character]).forEach(skin => {
               Object.keys(lib.qhly_skinChange[character][skin]).forEach(key => {
-                if (keys.contains(key)) {
+                if (keys.includes(key)) {
                   value.add(key);
                   if (typeof lib.qhly_skinChange[character][skin][key] != 'string') {
                     str += (character + '的皮肤“' + skin + '”中的“' + key + '”属性填写错误，请检查！');

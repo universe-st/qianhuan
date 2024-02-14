@@ -17,7 +17,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
             if(!lib.config.txcsanm_skillAnimation2)return [];
             var ret = [];
             for(var info of lib.config.txcsanm_skillAnimation2){
-                if(info && info.skills && info.skills.contains(skill)){
+                if(info && info.skills && info.skills.includes(skill)){
                     ret.push({
                         name:info.name,
                         label:info.label,
@@ -48,7 +48,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
             var ret = [];
             for(var eff in lib.config.txcsanm_skillAnimation){
                 var info = lib.config.txcsanm_skillAnimation[eff];
-                if(info && info.skills && info.skills.contains(skill)){
+                if(info && info.skills && info.skills.includes(skill)){
                     ret.push(eff);
                 }
             }
@@ -137,7 +137,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                     addPicButton.listen(function(){
                         game.qhly_chooseDialog("新增图片特效","请选择特效",null,that.getAllPicEff(),function(id,dialog){
                             if(lib.config.txcsanm_skillAnimation[id] && lib.config.txcsanm_skillAnimation[id].skills){
-                                if(lib.config.txcsanm_skillAnimation[id].skills.contains(skill)){
+                                if(lib.config.txcsanm_skillAnimation[id].skills.includes(skill)){
                                     alert("已经绑定了此技能");
                                 }else{
                                     lib.config.txcsanm_skillAnimation[id].skills.push(skill);
@@ -174,7 +174,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
                             }else{
                                 var spine = lib.config.txcsanm_skillAnimation2.findspine(eff.name,eff.label);
                                 if(spine && spine.skills){
-                                    if(spine.skills.contains(skill)){
+                                    if(spine.skills.includes(skill)){
                                         alert("已经绑定了此技能");
                                     }else{
                                         spine.skills.push(skill);

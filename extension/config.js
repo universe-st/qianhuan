@@ -869,7 +869,7 @@ export let CONFIG = {
     },
     "qhly_funcLoadInPrecontent": {
       "name": "预处理加载",
-      "intro": "设置此选项，将在预处理阶段加载此扩展的函数，可兼容《如真似幻》等美化扩展。",
+      "intro": "设置此选项，将在预处理阶段加载此扩展的函数，可兼容部分美化扩展。",
       "init": lib.config.qhly_funcLoadInPrecontent === undefined ? false : lib.config.qhly_funcLoadInPrecontent,
       onclick: function (item) {
         game.saveConfig('extension_千幻聆音_qhly_funcLoadInPrecontent', item);

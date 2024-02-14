@@ -1,5 +1,5 @@
 import {lib,get,_status,ui,game,ai} from './noname.js';
-
+import {nonameInitialized} from '../../../noname/util/index.js'
 export let CONTENT = function (config, pack) {
     if((lib.config.qhly_funcLoadInPrecontent || game.qhly_hasExtension("如真似幻")) && !window.qhly_inPercontent){
       return;
@@ -310,7 +310,7 @@ export let CONTENT = function (config, pack) {
                 var skin;
                 var namex = i == 0 ? character : character2;
                 if (transform) skin = transform;
-                else if (lib && lib.config && lib.config.qhly_skinset && lib.config.qhly_skinset.djtoggle && lib.config.extensions && lib.config.extensions.contains('千幻聆音') && lib.config['extension_千幻聆音_enable']) {
+                else if (lib && lib.config && lib.config.qhly_skinset && lib.config.qhly_skinset.djtoggle && lib.config.extensions && lib.config.extensions.includes('千幻聆音') && lib.config['extension_千幻聆音_enable']) {
                   skin = null;
                   var value = game.qhly_getSkin(namex);
                   if (value) value = value.substring(0, value.lastIndexOf('.'));
@@ -938,13 +938,13 @@ export let CONTENT = function (config, pack) {
       var skills = info[3].slice(0);
       this.clearSkills(true);
       this.classList.add('fullskin');
-      if (!game.minskin && get.is.newLayout() && !info[4].contains('minskin')) {
+      if (!game.minskin && get.is.newLayout() && !info[4].includes('minskin')) {
         this.classList.remove('minskin');
         this.node.avatar.setBackground(character, 'character');
       }
       else {
         this.node.avatar.setBackground(character, 'character');
-        if (info[4].contains('minskin')) {
+        if (info[4].includes('minskin')) {
           this.classList.add('minskin');
         }
         else if (game.minskin) {
@@ -977,7 +977,7 @@ export let CONTENT = function (config, pack) {
       if (this.classList.contains('minskin') && this.node.name.querySelectorAll('br').length >= 4) {
         this.node.name.classList.add('long');
       }
-      if (info[4].contains('hiddenSkill') && !this.noclick) {
+      if (info[4].includes('hiddenSkill') && !this.noclick) {
         if (!this.hiddenSkills) this.hiddenSkills = [];
         this.hiddenSkills.addArray(skills);
         skills = [];
@@ -1044,7 +1044,7 @@ export let CONTENT = function (config, pack) {
           };
         }
         this.node.count.classList.add('p2');
-        if (info2[4].contains('hiddenSkill') && !this.noclick) {
+        if (info2[4].includes('hiddenSkill') && !this.noclick) {
           if (!this.hiddenSkills) this.hiddenSkills = [];
           this.hiddenSkills.addArray(info2[3]);
           this.classList.add(_status.video ? 'unseen2_v' : 'unseen2');
@@ -1169,7 +1169,7 @@ export let CONTENT = function (config, pack) {
             }
             var skin, skinName;
             var realName = game.qhly_getRealName(avatars[i]);
-            if (lib && lib.config && lib.config.qhly_skinset && lib.config.qhly_skinset.djtoggle && lib.config.extensions && lib.config.extensions.contains('千幻聆音') && lib.config['extension_千幻聆音_enable']) {
+            if (lib && lib.config && lib.config.qhly_skinset && lib.config.qhly_skinset.djtoggle && lib.config.extensions && lib.config.extensions.includes('千幻聆音') && lib.config['extension_千幻聆音_enable']) {
               skin = null;
               var namex = avatars[i];
               var value = game.qhly_getSkin(namex);
@@ -1365,7 +1365,7 @@ export let CONTENT = function (config, pack) {
       ui.updatem(this);
 
       this.skipList = [];
-      this.skills = this.skills.contains('cangji_yozuru') ? ['cangji_yozuru'] : [];
+      this.skills = this.skills.includes('cangji_yozuru') ? ['cangji_yozuru'] : [];
       this.initedSkills = [];
       this.additionalSkills = {};
       this.disabledSkills = {};
@@ -2046,7 +2046,7 @@ export let CONTENT = function (config, pack) {
             }
           } else if (lib.config.qhly_smallwindowstyle == 'shousha') {
             if (skin && node.campBack && name) {
-              if (!['史诗', '传说'].contains(game.qhly_getSkinLevel(character, name))) node.campBack.setAttribute("data-pinzhi", '史诗');
+              if (!['史诗', '传说'].includes(game.qhly_getSkinLevel(character, name))) node.campBack.setAttribute("data-pinzhi", '史诗');
               else node.campBack.setAttribute("data-pinzhi", game.qhly_getSkinLevel(character, name));
               node.campBack.classList.add('dong');
             }
@@ -2774,7 +2774,7 @@ export let CONTENT = function (config, pack) {
         (function(num){
           var plugin = map[num];
           var check = qhv['qhly_pluginwindow_plugin_'+num];
-          var isOpen = lib.config.qhly_disabledPlugins?(!lib.config.qhly_disabledPlugins.contains(game.qhly_getPluginId(plugin))):true;
+          var isOpen = lib.config.qhly_disabledPlugins?(!lib.config.qhly_disabledPlugins.includes(game.qhly_getPluginId(plugin))):true;
           ui.qhly_initCheckBox(check,isOpen);
           bindFunc(check,qhv['qhly_pluginwindow_plugin_text_'+num]);
           check.qhly_onchecked=function(check){
@@ -2867,7 +2867,7 @@ export let CONTENT = function (config, pack) {
           return;
         }
       } else {
-        resolveLocalFileSystemURL(lib.assetURL + path, (function (name) {
+        resolveLocalFileSystemURL(nonameInitialized + path, (function (name) {
           return function (entry) {
             callback(true);
           }
@@ -3119,7 +3119,7 @@ export let CONTENT = function (config, pack) {
     game.qhly_setDoubleGroup = function (state) {
       var group, dg;
       if (lib.config.qhly_doubleGroup && lib.config.qhly_doubleGroup[state.name]) {
-        if (lib.config.doubleGroupCharacter && lib.config.doubleGroupCharacter.contains(state.name) || get.is.double(state.name)) {
+        if (lib.config.doubleGroupCharacter && lib.config.doubleGroupCharacter.includes(state.name) || get.is.double(state.name)) {
           dg = true;
           group = lib.config.qhly_doubleGroup[state.name][0] + lib.config.qhly_doubleGroup[state.name][1];
         }
@@ -3129,14 +3129,14 @@ export let CONTENT = function (config, pack) {
         const groupList = ['jin', 'wei', 'shu', 'wu', 'qun', 'jin'];
         group = state.intro[1];
         state.group = group;
-        if (lib.config.doubleGroupCharacter && lib.config.doubleGroupCharacter.contains(state.name) || get.is.double(state.name)) {
+        if (lib.config.doubleGroupCharacter && lib.config.doubleGroupCharacter.includes(state.name) || get.is.double(state.name)) {
           dg = true;
           if (!lib.config.qhly_doubleGroup) game.saveConfig('qhly_doubleGroup', {});
           if (lib.config.qhly_doubleGroup[state.name]) group = lib.config.qhly_doubleGroup[state.name];
           else if (get.is.double(state.name)) {
             group = get.is.double(state.name, true);
           } else {
-            if (groupList.contains(group)) group = [group, groupList[groupList.indexOf(group) + 1]];
+            if (groupList.includes(group)) group = [group, groupList[groupList.indexOf(group) + 1]];
             else group = ['jin', 'wei'];
           }
           state.group = [...group];
@@ -3161,7 +3161,7 @@ export let CONTENT = function (config, pack) {
       var hp = state.intro[2], group;
       if (state.group && Array.isArray(state.group)) group = state.group[1];
       else if (lib.config.qhly_doubleGroup && lib.config.qhly_doubleGroup[state.name]) {
-        if (lib.config.doubleGroupCharacter && lib.config.doubleGroupCharacter.contains(state.name) || get.is.double(state.name)) {
+        if (lib.config.doubleGroupCharacter && lib.config.doubleGroupCharacter.includes(state.name) || get.is.double(state.name)) {
           group = lib.config.qhly_doubleGroup[state.name][1];
         }
         else group = state.intro[1];
@@ -3204,7 +3204,7 @@ export let CONTENT = function (config, pack) {
       slimName = slimName[slimName.length - 1];
       const excludeName = ['xiahouyuan', 'guanyu', 'sunjian', 'simashi', 'lvbu'];
       if (state.mainView.skinTypeGuozhan) {  //显示国战血量
-        if (get.mode() != 'guozhan' && excludeName.contains(slimName) && state.name != 're_lvbu') HP++;//非国战模式下除界吕布以外角色显示普通模式血量+1
+        if (get.mode() != 'guozhan' && excludeName.includes(slimName) && state.name != 're_lvbu') HP++;//非国战模式下除界吕布以外角色显示普通模式血量+1
         HP = HP *= 0.5;
         if (HP <= 5) {
           for (var i = 0; i < Math.floor(HP); i++) {
@@ -3439,7 +3439,7 @@ export let CONTENT = function (config, pack) {
     }
     game.qhly_hasGuozhanSkin = function (name) {
       if (lib.config.qhly_gzskinList && lib.config.qhly_guozhan !== false) {
-        return lib.config.qhly_gzskinList.contains(name);
+        return lib.config.qhly_gzskinList.includes(name);
       }
       return false;
     };
@@ -3549,7 +3549,7 @@ export let CONTENT = function (config, pack) {
     };
     game.qhly_hasGuozhanAudio = function (name) {
       if (lib.config.gzaudioList && lib.config.qhly_guozhan !== false) {
-        return lib.config.qhly_gzaudioList.contains(name);
+        return lib.config.qhly_gzaudioList.includes(name);
       }
       return false;
     };
@@ -3568,8 +3568,8 @@ export let CONTENT = function (config, pack) {
       };
     };
     game.qhly_isForbidAI = function (name) {
-      if (lib.config.forbidai && lib.config.forbidai.contains(name)) return true;
-      if (lib.config.forbidai_user && lib.config.forbidai_user.contains(name)) return true;
+      if (lib.config.forbidai && lib.config.forbidai.includes(name)) return true;
+      if (lib.config.forbidai_user && lib.config.forbidai_user.includes(name)) return true;
       return false;
     };
     game.qhly_setForbidAI = function (name, forbid) {
@@ -3667,7 +3667,7 @@ export let CONTENT = function (config, pack) {
       var onfinish = function () {
 
       };
-      if (['checkboxList', '复选框'].contains(obj.type)) {
+      if (['checkboxList', '复选框'].includes(obj.type)) {
         var items = obj.items ? obj.items : [];
         var oncheck = obj.oncheck ? obj.oncheck : function () { };
         var checkboxRef = {};
@@ -3708,7 +3708,7 @@ export let CONTENT = function (config, pack) {
             })(checkbox, item);
           }
         };
-      } else if (['selectList', '下拉列表'].contains(obj.type)) {
+      } else if (['selectList', '下拉列表'].includes(obj.type)) {
         var id = "qhly_selfedit_select_" + game.qhly_genId();
         str += "<p><select style='font-size:22px;font-family:'qh_youyuan';' id='" + id + "'></select></p>";
         onfinish = function (view) {
@@ -4762,7 +4762,7 @@ export let CONTENT = function (config, pack) {
         }
         if(_status.video) break;
       }
-      if(!lib.config.repeat_audio&&_status.skillaudio.contains(str)) return;
+      if(!lib.config.repeat_audio&&_status.skillaudio.includes(str)) return;
       _status.skillaudio.add(str);
       game.addVideo('playAudio',null,str);
       setTimeout(function(){
@@ -4911,7 +4911,7 @@ export let CONTENT = function (config, pack) {
         }
         if (_status.video) break;
       }
-      //if(!lib.config.repeat_audio&&_status.skillaudio.contains(str)) return;
+      //if(!lib.config.repeat_audio&&_status.skillaudio.includes(str)) return;
       _status.skillaudio.add(str);
       game.addVideo('playAudio', null, str);
       setTimeout(function () {
@@ -5237,7 +5237,7 @@ export let CONTENT = function (config, pack) {
       if (!skin) {
         skin = "[original]";
       }
-      return lib.config.qhly_banskinlist.contains(name + '-' + skin);
+      return lib.config.qhly_banskinlist.includes(name + '-' + skin);
     };
     //获取皮肤文件。参数为武将名称和皮肤名称。注意需要包含扩展名。
     game.qhly_getSkinFile = function (name, skin) {
@@ -5319,7 +5319,7 @@ export let CONTENT = function (config, pack) {
         if (pkg.skinShare) {
           lib.qhly_skinShare = Object.assign(lib.qhly_skinShare, pkg.skinShare);
         }
-        if (pkg.characterList && pkg.characterList.contains(name)) {
+        if (pkg.characterList && pkg.characterList.includes(name)) {
           skinPackage = pkg;
           break;
         }
@@ -5357,7 +5357,7 @@ export let CONTENT = function (config, pack) {
                 name = name.slice(3, 11);
               }
               else {
-                if (lib.config.mode_config.guozhan.guozhanSkin && lib.character[name] && lib.character[name][4].contains('gzskin')) gzbool = true;
+                if (lib.config.mode_config.guozhan.guozhanSkin && lib.character[name] && lib.character[name][4].includes('gzskin')) gzbool = true;
                 name = name.slice(3);
               }
             }
@@ -5542,7 +5542,7 @@ export let CONTENT = function (config, pack) {
               var retList2 = [];
               for (var item of list) {
                 var nm = game.qhly_earseExt(item);
-                if (folders.contains(nm)) {
+                if (folders.includes(nm)) {
                   retList.add(nm);
                   retList2.add(item);
                 }
@@ -5607,7 +5607,7 @@ export let CONTENT = function (config, pack) {
             path = skinPackage.skin.standard;
           }
           path = path + realName;
-          if (loadInfoJs && list.contains('skininfo.js') && !lib.qhly_dirskininfo[name]) {
+          if (loadInfoJs && list.includes('skininfo.js') && !lib.qhly_dirskininfo[name]) {
             lib.init.js(lib.assetURL + path + "/skininfo.js", null, function () {
               callback(true, handleHide(list.slice(0)));
             }, function (err) {
@@ -5647,7 +5647,7 @@ export let CONTENT = function (config, pack) {
               if (!_status.qhly_skinListCache) _status.qhly_skinListCache = {};
               var ret = files.slice(0);
               _status.qhly_skinListCache[name] = ret;
-              if (loadInfoJs && files.contains('skininfo.js')) {
+              if (loadInfoJs && files.includes('skininfo.js')) {
                 lib.init.js(lib.assetURL + path + "/skininfo.js", null, function () {
                   callback(true, handleHide(files));
                 }, function () {
@@ -5704,7 +5704,7 @@ export let CONTENT = function (config, pack) {
           for (var i of skinList) {
             if (i.skinId) {
               var skin = i.skinId.substring(0, i.skinId.lastIndexOf('.'));
-              if (dynamicSkinList.contains(skin)) i.bothSkin = true;
+              if (dynamicSkinList.includes(skin)) i.bothSkin = true;
             }
           }
           if (dynamicSkinList.length) {
@@ -5715,9 +5715,9 @@ export let CONTENT = function (config, pack) {
             for (var i of dynamicSkinList) {
               if (i == '经典形象') {
                 skinList['0'].bothSkin = true;
-                subView.skinType.style.cssText += 'transform:translateY(32%);';
+                //subView.skinType.style.cssText += 'transform:translateY(32%);';
               }
-              else if (!duibiList.contains(i)) {
+              else if (!duibiList.includes(i)) {
                 var dyskin = i + '.jpg';
                 var dyinfo = game.qhly_getSkinInfo(name,dyskin,pkg);
                 skinList.push({
@@ -5879,7 +5879,7 @@ export let CONTENT = function (config, pack) {
     game.qhly_writeTextFile = function (str, path, filename, callback) {
       if (lib.device) {
         game.ensureDirectory(path, function () {
-          window.resolveLocalFileSystemURL(lib.assetURL + path, function (entry) {
+          window.resolveLocalFileSystemURL(nonameInitialized + path, function (entry) {
             entry.getFile(filename, { create: true }, function (fileEntry) {
               fileEntry.createWriter(function (fileWriter) {
                 fileWriter.onwriteend = function () {
@@ -5903,7 +5903,7 @@ export let CONTENT = function (config, pack) {
     game.qhly_writeImageFile = function (str, path, filename, callback) {
       if (lib.device) {
         game.ensureDirectory(path, function () {
-          window.resolveLocalFileSystemURL(lib.assetURL + path, function (entry) {
+          window.resolveLocalFileSystemURL(nonameInitialized + path, function (entry) {
             entry.getFile(filename, { create: true }, function (fileEntry) {
               fileEntry.createWriter(function (fileWriter) {
                 fileWriter.onwriteend = function () {
@@ -6074,7 +6074,7 @@ export let CONTENT = function (config, pack) {
           game.qhly_checkFileExist(path, function (success) {
             if (success) {
               game.getFileList(path, function (folders, files) {
-                if (files.contains('audio-redirect.js')) {
+                if (files.includes('audio-redirect.js')) {
                   lib.init.js(lib.assetURL + path + '/audio-redirect.js', null, function () {
                     game.qhly_setCurrentSkin(name, skin, callback);
                   });
@@ -6381,13 +6381,13 @@ export let CONTENT = function (config, pack) {
         audioinfo = audioinfo[1];
       }
       if (Array.isArray(info.audioname) && player) {
-        if (info.audioname.contains(player.name)) {
+        if (info.audioname.includes(player.name)) {
           audioname += '_' + player.name;
         }
-        else if (info.audioname.contains(player.name1)) {
+        else if (info.audioname.includes(player.name1)) {
           audioname += '_' + player.name1;
         }
-        else if (info.audioname.contains(player.name2)) {
+        else if (info.audioname.includes(player.name2)) {
           audioname += '_' + player.name2;
         }
       }
@@ -6434,13 +6434,13 @@ export let CONTENT = function (config, pack) {
           audioinfo = audioinfo[1];
         }
         if (Array.isArray(info.audioname) && player) {
-          if (info.audioname.contains(player.name)) {
+          if (info.audioname.includes(player.name)) {
             audioname += '_' + player.name;
           }
-          else if (info.audioname.contains(player.name1)) {
+          else if (info.audioname.includes(player.name1)) {
             audioname += '_' + player.name1;
           }
-          else if (info.audioname.contains(player.name2)) {
+          else if (info.audioname.includes(player.name2)) {
             audioname += '_' + player.name2;
           }
         }
@@ -6509,13 +6509,13 @@ export let CONTENT = function (config, pack) {
           audioinfo = audioinfo[1];
         }
         if (Array.isArray(info.audioname) && player) {
-          if (info.audioname.contains(player.name)) {
+          if (info.audioname.includes(player.name)) {
             audioname += '_' + player.name;
           }
-          else if (info.audioname.contains(player.name1)) {
+          else if (info.audioname.includes(player.name1)) {
             audioname += '_' + player.name1;
           }
-          else if (info.audioname.contains(player.name2)) {
+          else if (info.audioname.includes(player.name2)) {
             audioname += '_' + player.name2;
           }
         }
@@ -7060,7 +7060,7 @@ export let CONTENT = function (config, pack) {
         game.qhly_open_small_dragon(name, from, ingame);
         return;
       }
-      if(!from && ['decade','shousha'].contains(lib.config.qhly_smallwindowstyle)){
+      if(!from && ['decade','shousha'].includes(lib.config.qhly_smallwindowstyle)){
         game.qhly_open_small_dragon(name, from, ingame);
         return;
       }
@@ -7763,7 +7763,7 @@ export let CONTENT = function (config, pack) {
             for (var i of skinList) {
               if (i) {
                 let skin = i.substring(0, i.lastIndexOf('.'));
-                if (dynamicSkinList.contains(skin)) {
+                if (dynamicSkinList.includes(skin)) {
                   bothSkin.push(skin);//双形态
                   singleDynamic.remove(skin);
                 }
@@ -7825,7 +7825,7 @@ export let CONTENT = function (config, pack) {
               game.qhly_dom2image(ingame, namex, this, path);
             });//3
             skinView.dynamicToggle = ui.create.div('.qh-skinchange-dynamicChange', skinView);
-            if (!skin && dynamicSkinList.contains('经典形象.jpg')) skinView.dynamicToggle.setAttribute('toggle', true);
+            if (!skin && dynamicSkinList.includes('经典形象.jpg')) skinView.dynamicToggle.setAttribute('toggle', true);
             if (skin && lib.config.qhly_skinset.djtoggle[namex]) {
               if (lib.config.qhly_skinset.djtoggle[namex][skin.substring(0, skin.lastIndexOf('.'))]) skinView.dynamicToggle.classList.add('jing');
             }
@@ -7850,13 +7850,13 @@ export let CONTENT = function (config, pack) {
             //var dynamicPlayer = ui.create.div('.animation-player', skinView.$dynamicWrap);
             if (skin) {
               var str = skin.substring(0, skin.lastIndexOf('.'));
-              if (bothSkin.contains(str)) skinView.dynamicToggle.setAttribute('toggle', true);
-              if (singleDynamic.contains(str) && lib.config['extension_千幻聆音_qhly_dom2image']) skinView.toImageBtn.setAttribute('single', true);//打开快照
+              if (bothSkin.includes(str)) skinView.dynamicToggle.setAttribute('toggle', true);
+              if (singleDynamic.includes(str) && lib.config['extension_千幻聆音_qhly_dom2image']) skinView.toImageBtn.setAttribute('single', true);//打开快照
               var info = game.qhly_getSkinInfo(namex, skin);
               if (info) {
                 skinView.belowText.innerHTML = info.translation;
               }
-              if ((!lib.config.qhly_skinset.djtoggle[namex] || lib.config.qhly_skinset.djtoggle[namex] && !lib.config.qhly_skinset.djtoggle[namex][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[namex] && Object.keys(decadeUI.dynamicSkin[namex]).contains(info.translation)) {
+              if ((!lib.config.qhly_skinset.djtoggle[namex] || lib.config.qhly_skinset.djtoggle[namex] && !lib.config.qhly_skinset.djtoggle[namex][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[namex] && Object.keys(decadeUI.dynamicSkin[namex]).includes(info.translation)) {
                 if (playZhuDynamic) game.qhly_changeDynamicSkin(skinView, info.translation, namex);
               }
               //game.qhly_showSkinQua(skinView, skin);
@@ -7864,7 +7864,7 @@ export let CONTENT = function (config, pack) {
               //if (info.translation == lib.config.qhly_skinset.skin[name].substring(0, 4)) game.qhly_changeDynamicSkin(skinView, name);
             } else {
               skinView.belowText.innerHTML = "经典形象";
-              if (dynamicSkinList.contains('经典形象.jpg') && playZhuDynamic) game.qhly_changeDynamicSkin(skinView, '经典形象', namex);
+              if (dynamicSkinList.includes('经典形象.jpg') && playZhuDynamic) game.qhly_changeDynamicSkin(skinView, '经典形象', namex);
             }
             var skinQua = ui.create.div('.qhly-skinQua-decade', skinView);
             var skininfo = game.qhly_getSkinInfo(namex, skin, game.qhly_foundPackage(namex));
@@ -8007,7 +8007,7 @@ export let CONTENT = function (config, pack) {
               for (var i of skinList) {
                 if (i) {
                   var skin = i.substring(0, i.lastIndexOf('.'));
-                  if (dynamicSkinList.contains(skin)) {
+                  if (dynamicSkinList.includes(skin)) {
                     bothSkin.push(skin);//双形态
                     singleDynamic.remove(skin);
                   }
@@ -8070,8 +8070,8 @@ export let CONTENT = function (config, pack) {
                 game.qhly_dom2image(ingame, namey, this, path);
               });
               skinView.dynamicToggle = ui.create.div('.qh-skinchange-dynamicChange', skinView);
-              if (skin && bothSkin.contains(skin.substring(0, skin.lastIndexOf('.')))) skinView.dynamicToggle.setAttribute('toggle', true);
-              if (!skin && dynamicSkinList.contains('经典形象.jpg')) skinView.dynamicToggle.setAttribute('toggle', true);
+              if (skin && bothSkin.includes(skin.substring(0, skin.lastIndexOf('.')))) skinView.dynamicToggle.setAttribute('toggle', true);
+              if (!skin && dynamicSkinList.includes('经典形象.jpg')) skinView.dynamicToggle.setAttribute('toggle', true);
               if (skin && lib.config.qhly_skinset.djtoggle[namey]) {
                 if (lib.config.qhly_skinset.djtoggle[namey][skin.substring(0, skin.lastIndexOf('.'))]) skinView.dynamicToggle.classList.add('jing');
               }
@@ -8097,13 +8097,13 @@ export let CONTENT = function (config, pack) {
               //var dynamicPlayer = ui.create.div('.animation-player', skinView.$dynamicWrap);
               if (skin) {
                 var str = skin.substring(0, skin.lastIndexOf('.'));
-                if (bothSkin.contains(str)) skinView.dynamicToggle.setAttribute('toggle', true);
-                if (singleDynamic.contains(str) && lib.config['extension_千幻聆音_qhly_dom2image']) skinView.toImageBtn.setAttribute('single', true);//打开快照
+                if (bothSkin.includes(str)) skinView.dynamicToggle.setAttribute('toggle', true);
+                if (singleDynamic.includes(str) && lib.config['extension_千幻聆音_qhly_dom2image']) skinView.toImageBtn.setAttribute('single', true);//打开快照
                 var info = game.qhly_getSkinInfo(namey, skin);
                 if (info) {
                   skinView.belowText.innerHTML = info.translation;
                 }
-                if ((!lib.config.qhly_skinset.djtoggle[namey] || lib.config.qhly_skinset.djtoggle[namey] && !lib.config.qhly_skinset.djtoggle[namey][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[namey] && Object.keys(decadeUI.dynamicSkin[namey]).contains(info.translation)) {
+                if ((!lib.config.qhly_skinset.djtoggle[namey] || lib.config.qhly_skinset.djtoggle[namey] && !lib.config.qhly_skinset.djtoggle[namey][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[namey] && Object.keys(decadeUI.dynamicSkin[namey]).includes(info.translation)) {
                   if (playFuDynamic) game.qhly_changeDynamicSkin(skinView, info.translation, namey, true);
                 }
                 //game.qhly_showSkinQua(skinView, skin);
@@ -8111,7 +8111,7 @@ export let CONTENT = function (config, pack) {
                 //if (info.translation == lib.config.qhly_skinset.skin[name].substring(0, 4)) game.qhly_changeDynamicSkin(skinView, name);
               } else {
                 skinView.belowText.innerHTML = "经典形象";
-                if (dynamicSkinList.contains('经典形象.jpg') && playFuDynamic) game.qhly_changeDynamicSkin(skinView, '经典形象', namey);
+                if (dynamicSkinList.includes('经典形象.jpg') && playFuDynamic) game.qhly_changeDynamicSkin(skinView, '经典形象', namey);
               }
               var skinQua = ui.create.div('.qhly-skinQua-decade', skinView);
               var skininfo = game.qhly_getSkinInfo(namey, skin, game.qhly_foundPackage(namey));
@@ -8712,7 +8712,7 @@ export let CONTENT = function (config, pack) {
             for (var i of skinList) {
               if (i) {
                 var skin = i.substring(0, i.lastIndexOf('.'));
-                if (dynamicSkinList.contains(skin)) {
+                if (dynamicSkinList.includes(skin)) {
                   bothSkin.push(skin);//双形态
                   singleDynamic.remove(skin);
                 }
@@ -8757,8 +8757,8 @@ export let CONTENT = function (config, pack) {
               game.qhly_dom2image(ingame, namex, this, path);
             });//3
             skinView.dynamicToggle = ui.create.div('.qh-skinchange-shousha-dynamicChange', skinView);
-            //if (skin && bothSkin.contains(skin.substring(0, skin.lastIndexOf('.')))) skinView.dynamicToggle.setAttribute('toggle', true);
-            if (!skin && dynamicSkinList.contains('经典形象.jpg')) skinView.dynamicToggle.setAttribute('toggle', true);
+            //if (skin && bothSkin.includes(skin.substring(0, skin.lastIndexOf('.')))) skinView.dynamicToggle.setAttribute('toggle', true);
+            if (!skin && dynamicSkinList.includes('经典形象.jpg')) skinView.dynamicToggle.setAttribute('toggle', true);
             if (skin && lib.config.qhly_skinset.djtoggle[namex]) {
               if (lib.config.qhly_skinset.djtoggle[namex][skin.substring(0, skin.lastIndexOf('.'))]) skinView.dynamicToggle.classList.add('jing');
             }
@@ -8782,18 +8782,18 @@ export let CONTENT = function (config, pack) {
             });
             if (skin) {
               var str = skin.substring(0, skin.lastIndexOf('.'));
-              if (bothSkin.contains(str)) skinView.dynamicToggle.setAttribute('toggle', true);
-              if (singleDynamic.contains(str) && lib.config['extension_千幻聆音_qhly_dom2image']) skinView.toImageBtn.setAttribute('single', true);//打开快照
+              if (bothSkin.includes(str)) skinView.dynamicToggle.setAttribute('toggle', true);
+              if (singleDynamic.includes(str) && lib.config['extension_千幻聆音_qhly_dom2image']) skinView.toImageBtn.setAttribute('single', true);//打开快照
               var info = game.qhly_getSkinInfo(namex, skin);
               if (info) {
                 skinView.belowText.innerHTML = info.translation;
               }
-              if ((!lib.config.qhly_skinset.djtoggle[namex] || lib.config.qhly_skinset.djtoggle[namex] && !lib.config.qhly_skinset.djtoggle[namex][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[namex] && Object.keys(decadeUI.dynamicSkin[namex]).contains(info.translation)) {
+              if ((!lib.config.qhly_skinset.djtoggle[namex] || lib.config.qhly_skinset.djtoggle[namex] && !lib.config.qhly_skinset.djtoggle[namex][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[namex] && Object.keys(decadeUI.dynamicSkin[namex]).includes(info.translation)) {
                 if (playZhuDynamic) game.qhly_changeDynamicSkin(skinView, info.translation, namex);
               }
             } else {
               skinView.belowText.innerHTML = "经典形象";
-              if (dynamicSkinList.contains('经典形象.jpg') && playZhuDynamic) game.qhly_changeDynamicSkin(skinView, '经典形象', namex);
+              if (dynamicSkinList.includes('经典形象.jpg') && playZhuDynamic) game.qhly_changeDynamicSkin(skinView, '经典形象', namex);
             }
             var skinQua = ui.create.div('.qhly-skinQua-shousha', skinView);
             var skininfo = game.qhly_getSkinInfo(namex, skin, game.qhly_foundPackage(namex));
@@ -8933,7 +8933,7 @@ export let CONTENT = function (config, pack) {
               for (var i of skinList) {
                 if (i) {
                   var skin = i.substring(0, i.lastIndexOf('.'));
-                  if (dynamicSkinList.contains(skin)) {
+                  if (dynamicSkinList.includes(skin)) {
                     bothSkin.push(skin);//双形态
                     singleDynamic.remove(skin);
                   }
@@ -8978,8 +8978,8 @@ export let CONTENT = function (config, pack) {
                 game.qhly_dom2image(ingame, namey, this, path);
               });//3
               skinView.dynamicToggle = ui.create.div('.qh-skinchange-shousha-dynamicChange', skinView);
-              //if (skin && bothSkin.contains(skin.substring(0, skin.lastIndexOf('.')))) skinView.dynamicToggle.setAttribute('toggle', true);
-              if (!skin && dynamicSkinList.contains('经典形象.jpg')) skinView.dynamicToggle.setAttribute('toggle', true);
+              //if (skin && bothSkin.includes(skin.substring(0, skin.lastIndexOf('.')))) skinView.dynamicToggle.setAttribute('toggle', true);
+              if (!skin && dynamicSkinList.includes('经典形象.jpg')) skinView.dynamicToggle.setAttribute('toggle', true);
               if (skin && lib.config.qhly_skinset.djtoggle[namey]) {
                 if (lib.config.qhly_skinset.djtoggle[namey][skin.substring(0, skin.lastIndexOf('.'))]) skinView.dynamicToggle.classList.add('jing');
               }
@@ -9003,18 +9003,18 @@ export let CONTENT = function (config, pack) {
               });
               if (skin) {
                 var str = skin.substring(0, skin.lastIndexOf('.'));
-                if (bothSkin.contains(str)) skinView.dynamicToggle.setAttribute('toggle', true);
-                if (singleDynamic.contains(str) && lib.config['extension_千幻聆音_qhly_dom2image']) skinView.toImageBtn.setAttribute('single', true);//打开快照
+                if (bothSkin.includes(str)) skinView.dynamicToggle.setAttribute('toggle', true);
+                if (singleDynamic.includes(str) && lib.config['extension_千幻聆音_qhly_dom2image']) skinView.toImageBtn.setAttribute('single', true);//打开快照
                 var info = game.qhly_getSkinInfo(namey, skin);
                 if (info) {
                   skinView.belowText.innerHTML = info.translation;
                 }
-                if ((!lib.config.qhly_skinset.djtoggle[namey] || lib.config.qhly_skinset.djtoggle[namey] && !lib.config.qhly_skinset.djtoggle[namey][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[namey] && Object.keys(decadeUI.dynamicSkin[namey]).contains(info.translation)) {
+                if ((!lib.config.qhly_skinset.djtoggle[namey] || lib.config.qhly_skinset.djtoggle[namey] && !lib.config.qhly_skinset.djtoggle[namey][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[namey] && Object.keys(decadeUI.dynamicSkin[namey]).includes(info.translation)) {
                   if (playFuDynamic) game.qhly_changeDynamicSkin(skinView, info.translation, namey, true);
                 }
               } else {
                 skinView.belowText.innerHTML = "经典形象";
-                if (dynamicSkinList.contains('经典形象.jpg') && playFuDynamic) game.qhly_changeDynamicSkin(skinView, '经典形象', namey);
+                if (dynamicSkinList.includes('经典形象.jpg') && playFuDynamic) game.qhly_changeDynamicSkin(skinView, '经典形象', namey);
               }
               var skinQua = ui.create.div('.qhly-skinQua-shousha', skinView);
               var skininfo = game.qhly_getSkinInfo(namey, skin, game.qhly_foundPackage(namey));
@@ -9209,7 +9209,7 @@ export let CONTENT = function (config, pack) {
     //lib.element.content.useCard = new Function(qhly_changeUseCard(lib.element.content.useCard.toString()));
     var oldPlayCardAudio = game.playCardAudio;
     game.playCardAudio=function(card,player){
-      if(!_status.event || (!['useCard','respond'].contains(_status.event.name))){
+      if(!_status.event || (!['useCard','respond'].includes(_status.event.name))){
         return oldPlayCardAudio(card,player);
       }
       if (lib.config.background_audio) {
@@ -9333,7 +9333,7 @@ export let CONTENT = function (config, pack) {
           var next = owner.lose(cards, 'visible', ui.ordering).set('type', 'use');
           var directDiscard = [];
           for (var i = 0; i < cards.length; i++) {
-            if (!next.cards.contains(cards[i])) {
+            if (!next.cards.includes(cards[i])) {
               directDiscard.push(cards[i]);
             }
           }
@@ -9371,7 +9371,7 @@ export let CONTENT = function (config, pack) {
     };
     //打开选择皮肤界面。
     game.qhly_open_new = function (name, page, ingame) {
-      try {
+      //try {
         if(game.qhly_open_new_replace){
           game.qhly_open_new_replace(name,page,ingame);
           return;
@@ -9458,11 +9458,11 @@ export let CONTENT = function (config, pack) {
         }
         gback.show();
         game.pause2();
-      } catch (e) {
-        if (QHLY_DEBUGMODE) {
-          throw e;
-        }
-      }
+      // } catch (e) {
+      //   if (QHLY_DEBUGMODE) {
+      //     throw e;
+      //   }
+      // }
     };
     get.qhly_getMp = function (name, pkg) {
       if (!pkg) {
@@ -9749,7 +9749,7 @@ export let CONTENT = function (config, pack) {
     game.qhly_pluginIsEnable = function(plugin){
       var pluginId = game.qhly_getPluginId(plugin);
       if(pluginId === false)return false;
-      if(lib.config.qhly_disabledPlugins && lib.config.qhly_disabledPlugins.contains(pluginId)){
+      if(lib.config.qhly_disabledPlugins && lib.config.qhly_disabledPlugins.includes(pluginId)){
         return false;
       }
       if(!plugin.enable){
@@ -10236,7 +10236,7 @@ export let CONTENT = function (config, pack) {
             if (cplayer && lib.config.qhly_skillingame) {
               var skills = cplayer.getSkills(false, false);
               for (var tskill of skills) {
-                if (viewSkill.contains(tskill)) continue;
+                if (viewSkill.includes(tskill)) continue;
                 var info = get.info(tskill);
                 if (!info) continue;
                 if (!lib.translate[tskill]) continue;
@@ -10335,7 +10335,7 @@ export let CONTENT = function (config, pack) {
                       }
                     }
                     ui.qhly_initCheckBox(check, list.filter(function (sk) {
-                      return !lib.config.autoskilllist || !lib.config.autoskilllist.contains(sk);
+                      return !lib.config.autoskilllist || !lib.config.autoskilllist.includes(sk);
                     }).length != 0);
                     bindFunc(check, document.getElementById('qhly_autoskill_text_' + skill));
                     check.qhly_onchecked = function (checked) {
@@ -10431,7 +10431,7 @@ export let CONTENT = function (config, pack) {
                 else if (subView.avatarImage.stopDynamic) subView.avatarImage.stopDynamic();
               } else if (originSkin == null && window.decadeUI && decadeUI.dynamicSkin[name]) {
                 var dyList = Object.keys(decadeUI.dynamicSkin[name]);
-                if (dyList && dyList.contains('经典形象') && (!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name]['经典形象']))
+                if (dyList && dyList.includes('经典形象') && (!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name]['经典形象']))
                   game.qhly_changeDynamicSkin(subView.avatarImage, '经典形象', name);
                 else if (subView.avatarImage.stopDynamic) subView.avatarImage.stopDynamic();
               }
@@ -10638,7 +10638,7 @@ export let CONTENT = function (config, pack) {
                   if (info) {
                     skinView.belowText.innerText = info.translation + '*' + get.rawName2(name);
                   }
-                  if ((!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).contains(info.translation)) {
+                  if ((!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name][skin.substring(0, skin.lastIndexOf('.'))]) && window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name] && Object.keys(decadeUI.dynamicSkin[name]).includes(info.translation)) {
                     if (playBigDynamic) game.qhly_changeDynamicSkin(skinView, info.translation, name);
                   }
                 } else {
@@ -11110,7 +11110,7 @@ export let CONTENT = function (config, pack) {
               for (var i of this.skinList) {
                 if (i.skinId) {
                   var skin = i.skinId.substring(0, i.skinId.lastIndexOf('.'));
-                  if (dynamicSkinList.contains(skin)) i.bothSkin = true;
+                  if (dynamicSkinList.includes(skin)) i.bothSkin = true;
                 }
               }
               if (dynamicSkinList.length) {
@@ -11120,7 +11120,7 @@ export let CONTENT = function (config, pack) {
                 }
                 for (let i of dynamicSkinList) {
                   if (i == '经典形象') this.skinList['0'].bothSkin = true;
-                  else if (!duibiList.contains(i)) {
+                  else if (!duibiList.includes(i)) {
                     var dyskin = i + '.jpg';
                     var dyinfo = game.qhly_getSkinInfo(name, dyskin, state.pkg);
                     this.skinList.push({
@@ -11343,11 +11343,11 @@ export let CONTENT = function (config, pack) {
               });
             };
             var checkboxFav = document.getElementById('qhconfig_checkbox_fav');
-            ui.qhly_initCheckBox(checkboxFav, lib.config.favouriteCharacter && lib.config.favouriteCharacter.contains(name));
+            ui.qhly_initCheckBox(checkboxFav, lib.config.favouriteCharacter && lib.config.favouriteCharacter.includes(name));
             bindFunc(checkboxFav, document.getElementById('qhconfig_checkbox_text_fav'));
             checkboxFav.qhly_onchecked = function (check) {
               if (!check) {
-                if (lib.config.favouriteCharacter && lib.config.favouriteCharacter.contains(name)) {
+                if (lib.config.favouriteCharacter && lib.config.favouriteCharacter.includes(name)) {
                   lib.config.favouriteCharacter.remove(name);
                 }
               } else {
@@ -11363,7 +11363,7 @@ export let CONTENT = function (config, pack) {
             var allForbid = true;
             for (var mode in lib.mode) {
               if (mode != 'connect') {
-                if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].contains(mode)) {
+                if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].includes(mode)) {
                   continue;
                 }
                 allForbid = false;
@@ -11408,13 +11408,13 @@ export let CONTENT = function (config, pack) {
                 var checkbox = document.getElementById('qhconfig_checkbox_banned_mode_' + mode);
                 this['banned_checkbox_mode_' + mode] = checkbox;
                 if (checkbox) {
-                  ui.qhly_initCheckBox(checkbox, lib.config[mode + '_banned'] && lib.config[mode + '_banned'].contains(name));
+                  ui.qhly_initCheckBox(checkbox, lib.config[mode + '_banned'] && lib.config[mode + '_banned'].includes(name));
                   bindFunc(checkbox, document.getElementById('qhconfig_checkbox_text_' + mode));
                   (function (mode) {
                     checkbox.qhly_onchecked = function (checked) {
                       if (!checked) {
                         that.banned_checkbox_mode_all.qhly_setChecked(false, true);
-                        if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].contains(name)) {
+                        if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].includes(name)) {
                           lib.config[mode + '_banned'].remove(name);
                         }
                       } else {
@@ -11673,7 +11673,7 @@ export let CONTENT = function (config, pack) {
           }
         } else if (window.decadeUI && decadeUI.dynamicSkin[name]) {
           var dyList = Object.keys(decadeUI.dynamicSkin[name]);
-          if (dyList && dyList.contains('经典形象') && (!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name]['经典形象']))
+          if (dyList && dyList.includes('经典形象') && (!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name]['经典形象']))
             game.qhly_changeDynamicSkin(subView.avatarImage, '经典形象', name);
         }
         // }
@@ -12059,7 +12059,7 @@ export let CONTENT = function (config, pack) {
             if (cplayer && lib.config.qhly_skillingame) {
               var skills = cplayer.getSkills(false, false);
               for (var tskill of skills) {
-                if (viewSkill.contains(tskill)) continue;
+                if (viewSkill.includes(tskill)) continue;
                 var info = get.info(tskill);
                 if (!info) continue;
                 if (!lib.translate[tskill]) continue;
@@ -12083,11 +12083,11 @@ export let CONTENT = function (config, pack) {
                       content += 'opacity:0.5;'
                     }
                   }
-                  content += "vertical-align:top;width:100px;height:100px;background-repeat:no-repeat;background-position:top left;background-size:100px 100px;background-image:url(" + lib.qhly_path + "theme/shuimo/newui_shuimo_skillname.png);";
+                  content += "vertical-align:top;width:100px;height:100px;background-repeat:no-repeat;background-position:top left;background-size:100px 100px;background-image:url(" + lib.qhly_path + get.qhly_getIf(currentViewSkin.skillNameImage, "theme/shuimo/newui_shuimo_skillname.png")+");";
                   content += "color:";
-                  if (derivation.contains(skill)) {
+                  if (derivation.includes(skill)) {
                     content += get.qhly_getIf(currentViewSkin.skillPageDerivationSkillColor, "#0000ff") + ";";
-                  } else if (tempSkill.contains(skill)) {
+                  } else if (tempSkill.includes(skill)) {
                     content += get.qhly_getIf(currentViewSkin.skillPageTempSkillColor, "#00FF00") + ";";
                   } else {
                     content += get.qhly_getIf(currentViewSkin.skillPageSkillNameColor, "#5B0F00") + ";";
@@ -12177,9 +12177,9 @@ export let CONTENT = function (config, pack) {
                     skilltitle = str;
                   }
                   content += "<h3";
-                  if (derivation.contains(skill)) {
+                  if (derivation.includes(skill)) {
                     content += " style='color:" + get.qhly_getIf(currentViewSkin.skillPageDerivationSkillColor, "#0000ff") + ";";
-                  } else if (tempSkill.contains(skill)) {
+                  } else if (tempSkill.includes(skill)) {
                     content += " style='color:" + get.qhly_getIf(currentViewSkin.skillPageDerivationSkillColor, "#00ff00") + ";";
                   } else {
                     content += " style='color:" + get.qhly_getIf(currentViewSkin.skillPageSkillNameColor, "#5B0F00") + ";";
@@ -12284,7 +12284,7 @@ export let CONTENT = function (config, pack) {
                       }
                     }
                     ui.qhly_initCheckBox(check, list.filter(function (sk) {
-                      return !lib.config.autoskilllist || !lib.config.autoskilllist.contains(sk);
+                      return !lib.config.autoskilllist || !lib.config.autoskilllist.includes(sk);
                     }).length != 0);
                     bindFunc(check, document.getElementById('qhly_autoskill_text_' + skill));
                     check.qhly_onchecked = function (checked) {
@@ -12733,7 +12733,7 @@ export let CONTENT = function (config, pack) {
                 if (audio.id == 'victory' && !game.thunderFileExist(lib.assetURL + Vicpath + 'victory.mp3')) continue;
                 content += "<tr>";
                 content += "<td style='";
-                content += "text-align:center;vertical-align:top;width:100px;height:100px;background-repeat:no-repeat;background-position:top left;background-size:100px 100px;background-image:url(" + lib.qhly_path + "theme/shuimo/newui_shuimo_skillname.png);";
+                content += "text-align:center;vertical-align:top;width:100px;height:100px;background-repeat:no-repeat;background-position:top left;background-size:100px 100px;background-image:url(" + lib.qhly_path + get.qhly_getIf(currentViewSkin.skillNameImage, "theme/shuimo/newui_shuimo_skillname.png")+");";
                 if (audio.id == 'die') {
                   content += "color:#ff0000;";
                 } else if (audio.id == 'victory') {
@@ -13202,11 +13202,11 @@ export let CONTENT = function (config, pack) {
               });
             };
             var checkboxFav = document.getElementById('qhconfig_checkbox_fav');
-            ui.qhly_initCheckBox(checkboxFav, lib.config.favouriteCharacter && lib.config.favouriteCharacter.contains(name));
+            ui.qhly_initCheckBox(checkboxFav, lib.config.favouriteCharacter && lib.config.favouriteCharacter.includes(name));
             bindFunc(checkboxFav, document.getElementById('qhconfig_checkbox_text_fav'));
             checkboxFav.qhly_onchecked = function (check) {
               if (!check) {
-                if (lib.config.favouriteCharacter && lib.config.favouriteCharacter.contains(name)) {
+                if (lib.config.favouriteCharacter && lib.config.favouriteCharacter.includes(name)) {
                   lib.config.favouriteCharacter.remove(name);
                 }
               } else {
@@ -13222,7 +13222,7 @@ export let CONTENT = function (config, pack) {
             var allForbid = true;
             for (var mode in lib.mode) {
               if (mode != 'connect') {
-                if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].contains(mode)) {
+                if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].includes(mode)) {
                   continue;
                 }
                 allForbid = false;
@@ -13267,13 +13267,13 @@ export let CONTENT = function (config, pack) {
                 var checkbox = document.getElementById('qhconfig_checkbox_banned_mode_' + mode);
                 this['banned_checkbox_mode_' + mode] = checkbox;
                 if (checkbox) {
-                  ui.qhly_initCheckBox(checkbox, lib.config[mode + '_banned'] && lib.config[mode + '_banned'].contains(name));
+                  ui.qhly_initCheckBox(checkbox, lib.config[mode + '_banned'] && lib.config[mode + '_banned'].includes(name));
                   bindFunc(checkbox, document.getElementById('qhconfig_checkbox_text_' + mode));
                   (function (mode) {
                     checkbox.qhly_onchecked = function (checked) {
                       if (!checked) {
                         that.banned_checkbox_mode_all.qhly_setChecked(false, true);
-                        if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].contains(name)) {
+                        if (lib.config[mode + '_banned'] && lib.config[mode + '_banned'].includes(name)) {
                           lib.config[mode + '_banned'].remove(name);
                         }
                       } else {
@@ -14043,7 +14043,7 @@ export let CONTENT = function (config, pack) {
           }
           if (title) {
             levelText.show();
-            if (['精品', '史诗', '传说', '限定'].contains(title)) {
+            if (['精品', '史诗', '传说', '限定'].includes(title)) {
               var obj = {
                 '精品': 'jingpin',
                 '史诗': 'shishi',
@@ -14281,10 +14281,10 @@ export let CONTENT = function (config, pack) {
                     if (p.name1 == n || p.name2 == n) player = p;
                   }
                   var player = game.filterPlayer(function (c) { return c.name1 == n || c.name2 == n })[0];
-                  if (list.contains(sk)) {
+                  if (list.includes(sk)) {
                     list.remove(sk);
                   }
-                  if (sk && !list.contains(false)) {
+                  if (sk && !list.includes(false)) {
                     list.push(false);
                   }
                   list = list.filter(function (current) {

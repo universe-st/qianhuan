@@ -57,7 +57,7 @@ window.qhly_import(function(lib, game, ui, get, ai, _status){
         filterSkillInfo:function(info){
             var info2 = {};
             for(var key in info){
-                if(!this.banSkillInfoKey.contains(key)){
+                if(!this.banSkillInfoKey.includes(key)){
                     info2[key] = info[key];
                 }
             }
