@@ -2,6 +2,9 @@ import { lib,get,_status,ui,game,ai } from './noname.js';
 
 export let PRECONTENT = function (config) {
     //-----Q-----END-----
+    if(window.decadeUI && !window.decadeUI.dynamicSkin){
+      window.decadeUI.dynamicSkin = {};
+    }
         game.qhly_hasExtension = function (str) {
           if (!str || typeof str != 'string') return false;
           if (lib.config && lib.config.extensions) {

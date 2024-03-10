@@ -755,6 +755,13 @@ export let CONTENT = function (config, pack) {
       if (window.decadeUI && !lib.config['extension_千幻聆音_qhly_decadeCloseDynamic'] && (lib.config.qhly_currentViewSkin == 'decade' || lib.config.qhly_currentViewSkin == 'shousha')) {
         if (Object.defineProperties) {
           Object.defineProperties(lib.element.player, {
+            $init:{
+              get: function(){
+                return lib.element.player.qh_old_$init;
+              },
+              enumerable: true,
+              configurable: true,
+            },
             init: {
               get: function () {
                 return this.qhly_init || qhly_init;
@@ -823,6 +830,7 @@ export let CONTENT = function (config, pack) {
             },
           });
         } else {
+          lib.element.player.$init = lib.element.player.qh_old_$init;
           lib.element.player.init = qhly_init;
           lib.element.player.uninit = qhly_uninit;
           lib.element.player.reinit = qhly_reinit;
@@ -911,6 +919,7 @@ export let CONTENT = function (config, pack) {
         }
       }
     });
+    /*
     var qhly_oldinit = function (character, character2, skill) {
       if (typeof character == 'string' && !lib.character[character]) {
         lib.character[character] = get.character(character);
@@ -1085,7 +1094,9 @@ export let CONTENT = function (config, pack) {
       }
       this.update();
       return this;
-    };
+    };*/
+    var qhly_oldinit = lib.element.player.qh_old_init;
+    var qhly_old$init = lib.element.player.qh_old_$init;
     function qhly_init(character, character2, skill) {
       var isYh = this.getElementsByClassName("skinYh");
       if (isYh.length > 0) {
@@ -11105,7 +11116,7 @@ export let CONTENT = function (config, pack) {
               this.skinList.push(r);
             }
             let dynamicSkinList = [];
-            if (window.decadeUI) {
+            if (window.decadeUI && window.decadeUI.dynamicSkin) {
               if (decadeUI.dynamicSkin[name]) dynamicSkinList = Object.keys(decadeUI.dynamicSkin[name]);
               for (var i of this.skinList) {
                 if (i.skinId) {
@@ -11671,7 +11682,7 @@ export let CONTENT = function (config, pack) {
             game.qhly_changeDynamicSkin(subView.avatarImage, str, name);
             if (subView.avatarImage.dynamic && subView.avatarImage.dynamic.primary) _status.currentTexiao = subView.avatarImage.dynamic.primary.name;
           }
-        } else if (window.decadeUI && decadeUI.dynamicSkin[name]) {
+        } else if (window.decadeUI && decadeUI.dynamicSkin && decadeUI.dynamicSkin[name]) {
           var dyList = Object.keys(decadeUI.dynamicSkin[name]);
           if (dyList && dyList.includes('经典形象') && (!lib.config.qhly_skinset.djtoggle[name] || lib.config.qhly_skinset.djtoggle[name] && !lib.config.qhly_skinset.djtoggle[name]['经典形象']))
             game.qhly_changeDynamicSkin(subView.avatarImage, '经典形象', name);

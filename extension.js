@@ -6,6 +6,9 @@ import { CONFIG } from './extension/config.js';
 import { CONTENT } from './extension/content.js';
 import { PRECONTENT } from './extension/precontent.js';
 
+lib.element.player.qh_old_init = lib.element.player.init;
+lib.element.player.qh_old_$init = lib.element.player.$init;
+
 if (!window.qhlyUI) window.qhlyUI = {};
 window.qhlyUI.assets = {
   huanpifu: {
