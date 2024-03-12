@@ -10925,7 +10925,7 @@ export let CONTENT = function (config, pack) {
                   levelSelect.onchange = function (e) {
                     var event = e ? e : window.event;
                     if (event.target) {
-                      target = event.target;
+                      let target = event.target;
                       var opt = target[target.selectedIndex];
                       if (opt) {
                         var l = opt.getAttribute('name');
